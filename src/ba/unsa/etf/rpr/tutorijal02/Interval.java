@@ -7,41 +7,42 @@ public class Interval {
     public Interval() { }
 
     public Interval(double left, double right, boolean leftInclude, boolean rightInclude) {
+        if(left>right)throw new IllegalArgumentException("Nekorektni parametri intervala!");
         this.left = left;
         this.right = right;
         this.leftInclude = leftInclude;
         this.rightInclude = rightInclude;
     }
 
-    public double getLeft() {
+    public Double getLeft() {
         return left;
     }
 
-    public void setLeft(double left) {
+    public void setLeft(Double left) {
         this.left = left;
     }
 
-    public double getRight() {
+    public Double getRight() {
         return right;
     }
 
-    public void setRight(double right) {
+    public void setRight(Double right) {
         this.right = right;
     }
 
-    public boolean isLeftInclude() {
+    public Boolean isLeftInclude() {
         return leftInclude;
     }
 
-    public void setLeftInclude(boolean leftInclude) {
+    public void setLeftInclude(Boolean leftInclude) {
         this.leftInclude = leftInclude;
     }
 
-    public boolean isRightInclude() {
+    public Boolean isRightInclude() {
         return rightInclude;
     }
 
-    public void setRightInclude(boolean rightInclude) {
+    public void setRightInclude(Boolean rightInclude) {
         this.rightInclude = rightInclude;
     }
 
@@ -93,5 +94,36 @@ public class Interval {
     public boolean isNull() {
         if(left==null)return true;
         return false;
+    }
+
+    @Override
+    public String toString() {
+        if(isNull())return "()";
+        String output="";
+        if(leftInclude)output+="[";
+        else output+="(";
+        output+=left+","+right;
+        if(rightInclude)output+="]";
+        else output+=")";
+        return output;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Interval)) return false;
+
+        Interval interval = (Interval) o;
+
+        if (getLeft() != null ? !getLeft().equals(interval.getLeft()) : interval.getLeft() != null) return false;
+        if (getRight() != null ? !getRight().equals(interval.getRight()) : interval.getRight() != null) return false;
+        if (isLeftInclude() != null ? !isLeftInclude().equals(interval.isLeftInclude()) : interval.isLeftInclude() != null)
+            return false;
+        return isRightInclude() != null ? isRightInclude().equals(interval.isRightInclude()) : interval.isRightInclude() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }
